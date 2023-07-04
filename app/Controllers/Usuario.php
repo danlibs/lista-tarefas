@@ -28,6 +28,7 @@ class Usuario extends BaseController
         $id = session('user')['id'];
 
         $model->delete($id);
+        session()->destroy();
         return $this->response->setJSON('Conta apagada com sucesso')->setStatusCode(200);
     }
 }
