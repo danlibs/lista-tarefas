@@ -5,15 +5,17 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Tarefa as ModelsTarefa;
 
-use function PHPUnit\Framework\isJson;
-
 class Tarefa extends BaseController
 {
     public function getAll()
     {
         $model = new ModelsTarefa();
-        $tarefas = $model->findAll();
-
+        $tarefas = $model
+        ->select(['tarefas.id', 'tarefa'])
+        ->join('usuarios', 'tarefas.usuario = usuarios.id')
+        ->where('usuario', session('user')['id'])
+        ->findAll();
+        
         return $this->response->setJSON($tarefas)->setStatusCode(200, 'success');
     }
 
@@ -37,7 +39,7 @@ class Tarefa extends BaseController
     public function deleteAll()
     {
         $model = new ModelsTarefa();
-        $model->truncate();
+        $model->where('usuario', session('user')['id'])->delete();
         return $this->response->setJSON('Dados apagados')->setStatusCode(200);
     }
 

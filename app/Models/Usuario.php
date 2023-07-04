@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Tarefa extends Model
+class Usuario extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'tarefas';
+    protected $table            = 'usuarios';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['tarefa', 'usuario'];
+    protected $allowedFields    = ['nome', 'email', 'senha'];
 
     // Dates
     protected $useTimestamps = true;

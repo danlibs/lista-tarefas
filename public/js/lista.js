@@ -1,12 +1,14 @@
 import { axiosInstance, tarefasClicaveis, carregarTarefas, criarH5 } from "./helpers.js";
 
-const form = document.querySelector('form');
+const form = document.querySelector('#form-principal');
 const divQuadro = document.querySelector('#divQuadro');
+const btnExcluir =document.querySelector('#btn-excluir-conta');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const tarefa = form.inTarefa.value;
-    const dado = {tarefa: tarefa};
+    const idUsuario = document.querySelector('#idUsuario').innerHTML;
+    const dado = {tarefa: tarefa, usuario:idUsuario};
 
     const salvar = async () => {
         const resp = await axiosInstance.post('/api/tarefas', dado);
@@ -29,7 +31,7 @@ form.btnEditar.addEventListener('click', () => {
     }
     
     const tarefaEmEdicao = document.querySelector('.tarefa-em-edicao');
-    console.log(tarefaEmEdicao);
+    
     if (tarefaEmEdicao) {
         const idTarefaEmEdicao = tarefaEmEdicao.children[0].children[0].children[0].children[0].textContent;
         const textoTarefaEmEdicao = tarefaEmEdicao.children[0].children[0].children[0].children[1].textContent;
@@ -119,7 +121,6 @@ form.btnRetirar.addEventListener('click', () => {
     if (confirm(`Confirma a exclusão de ${tarefas[aux].innerText}?`)) {
         deleteId(tarefas[aux].children[0].children[0].textContent)
         .then((resp) => {
-            console.log(resp.data);
             divQuadro.removeChild(tarefas[aux]);
         }).catch((error) => {
             console.log(error.response.data);
@@ -130,7 +131,6 @@ form.btnRetirar.addEventListener('click', () => {
 form.btnApagarTudo.addEventListener('click', () => {
     const deletarTodas = async () => {
         const resp = await axiosInstance.delete('/api/tarefas');
-        console.log(resp.data);
     }
 
     if (confirm('Confirma a exclusão de todas as tarefas listadas?')) {
@@ -147,6 +147,20 @@ form.btnApagarTudo.addEventListener('click', () => {
     }
 })
 
+btnExcluir.addEventListener('click', () => {
+    const deletarConta = async () => {
+        await axiosInstance.delete('/cadastro');
+    }
+    
+    if (confirm('Confirma a exclusão de sua conta e de todas as tarefas a ela associadas?')) {
+        deletarConta().then(() => {
+            window.location.replace('login');
+        }).catch((error) => {
+            alert('Não foi possível deletar a conta por algum motivo.');
+            console.log(error.response.data);
+        })
+    }
+})
 
 window.addEventListener('load', () => {
     carregarTarefas()

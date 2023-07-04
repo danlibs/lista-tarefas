@@ -29,13 +29,18 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->get('api/tarefas', 'Tarefa::getAll');
-$routes->post('api/tarefas', 'Tarefa::save');
-$routes->delete('api/tarefas', 'Tarefa::deleteAll');
-$routes->delete('api/tarefas/(:num)', 'Tarefa::deleteId/$1');
-$routes->put('api/tarefas/(:num)', 'Tarefa::edit/$1');
+$routes->get('/', 'Home::index', ['as' => 'home']);
+$routes->get('/api/tarefas', 'Tarefa::getAll', ['as' => 'tarefa.getAll']);
+$routes->post('/api/tarefas', 'Tarefa::save', ['as' => 'tarefa.save']);
+$routes->delete('/api/tarefas', 'Tarefa::deleteAll', ['as' => 'tarefa.deleteAll']);
+$routes->delete('/api/tarefas/(:num)', 'Tarefa::deleteId/$1', ['as' => 'tarefa.deleteId']);
+$routes->put('/api/tarefas/(:num)', 'Tarefa::edit/$1', ['as' => 'tarefa.edit']);
 $routes->get('/login', 'Login::index', ['as' => 'login']);
+$routes->post('/login', 'Login::signIn', ['as' => 'login.signIn']);
+$routes->post('/logout', 'Login::logout', ['as' => 'login.logout']);
+$routes->get('/cadastro', 'Usuario::index', ['as' => 'cadastro']);
+$routes->post('/cadastro', 'Usuario::save', ['as' => 'usuario.save']);
+$routes->delete('/cadastro', 'Usuario::delete', ['as' => 'usuario.delete']);
 
 /*
  * --------------------------------------------------------------------

@@ -17,3 +17,11 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.btnlogout {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

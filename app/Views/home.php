@@ -9,10 +9,18 @@
         <div class="row">
             <div class="col-sm-4">
                 <img src="<?= base_url('img/tarefas.jpg') ?>" class="img-fluid">
+                <h3>Olá, <?= session('user')['nome'] ?>!</h3>
+                <span hidden id="idUsuario"><?= session('user')['id'] ?></span>
+                <form action="<?= url_to('login.logout') ?>" method="post">
+                    <button type="submit" class="btnlogout">Sair</button>
+                </form>
+                <div class="position-fixed bottom-0 start-0">
+                    <input type="button" id="btn-excluir-conta" class="m-2 btn btn-danger" value="Excluir Conta">
+                </div>
             </div>
             <div class="col-sm-8" id="divQuadro">
                 <h1>Tarefas do Dia</h1>
-                <form>
+                <form id="form-principal">
                     <p>
                         <label for="inTarefa">Tarefa:</label>
                         <input type="text" name="inTarefa" id="inTarefa" class="form-control" required autofocus>
